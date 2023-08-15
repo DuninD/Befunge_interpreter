@@ -23,19 +23,19 @@ class GameLogic:
     def translate(self):
         button_rect_stop = pygame.Rect(1116, 20, 40, 24)
         while not self.ready:
-            # for event in pygame.event.get():
-            #     if event.type == pygame.QUIT:
-            #         pygame.quit()
-            #         sys.exit()
-            #     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            #         if button_rect_stop.collidepoint(event.pos):
-            #             self.ready = True
-            #             break
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if button_rect_stop.collidepoint(event.pos):
+                        self.ready = True
+                        break
             if not self.ready:
                 self.next_move(button_rect_stop)
-            #     self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
-            # self.screen.blit(pygame.font.Font(None, 24).render(self.result, True, (0, 0, 0)), (7, 590))
-            # pygame.display.flip()
+                self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+            self.screen.blit(pygame.font.Font(None, 24).render(self.result, True, (0, 0, 0)), (7, 590))
+            pygame.display.flip()
 
     def pop(self):
         result = self.stack[-1]
@@ -49,11 +49,11 @@ class GameLogic:
         self.new_char = e.name
 
     def next_move(self, button_rect_stop):
-        # if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
-        #     self.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
-        # else:
-        #     self.screen.fill((255, 10, 30), pygame.Rect(1117, 21, 38, 22))
-        # self.screen.blit(pygame.font.Font(None, 24).render("Stop", True, (0, 0, 0)), (1118, 24))
+        if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
+            self.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
+        else:
+            self.screen.fill((255, 10, 30), pygame.Rect(1117, 21, 38, 22))
+        self.screen.blit(pygame.font.Font(None, 24).render("Stop", True, (0, 0, 0)), (1118, 24))
         if self.grid[self.position[0]][self.position[1]] is not None:
             if self.grid[self.position[0]][self.position[1]] == "\"":
                 self.add_now = not self.add_now
@@ -191,59 +191,59 @@ class GameLogic:
                         self.stack.append("1")
                     else:
                         self.stack.append("0")
-            # elif self.grid[self.position[0]][self.position[1]] == "&":
-            #     need_number = True
-            #     write_rect = pygame.Rect(5, 170, 150, 24)
-            #     while need_number:
-            #         self.screen.fill((255, 255, 255), write_rect)
-            #         pygame.draw.rect(self.screen, (0, 0, 0), write_rect, 1)
-            #         if self.input == "":
-            #             self.screen.blit(pygame.font.Font(None, 24).render("Введите число", True, (0, 0, 0)),
-            #                              (7, 173))
-            #         for event in pygame.event.get():
-            #             if event.type == pygame.KEYDOWN and self.can_write:
-            #                 keyboard.hook(self.pressed_keys)
-            #                 if self.new_char == "enter" and self.can_write:
-            #                     self.screen.fill((85, 101, 102), write_rect)
-            #                     self.stack.append(self.input)
-            #                     self.input = ""
-            #                     pygame.display.flip()
-            #                     need_number = False
-            #                     break
-            #                 elif len(self.new_char) == 1 and self.can_write and self.new_char.isdigit() and \
-            #                         len(self.input) < 12:
-            #                     self.input += self.new_char
-            #                 self.can_write = False
-            #             elif event.type == pygame.KEYUP:
-            #                 self.can_write = True
-            # elif self.grid[self.position[0]][self.position[1]] == "~":
-            #     need_char = True
-            #     write_rect = pygame.Rect(5, 170, 150, 24)
-            #     while need_char:
-            #         self.screen.fill((255, 255, 255), write_rect)
-            #         pygame.draw.rect(self.screen, (0, 0, 0), write_rect, 1)
-            #         if self.input == "":
-            #             self.screen.blit(pygame.font.Font(None, 24).render("Введите символ", True, (0, 0, 0)),
-            #                              (7, 173))
-            #         else:
-            #             self.screen.blit(pygame.font.Font(None, 24).render(self.input, True, (0, 0, 0)),
-            #                              (7, 173))
-            #         pygame.display.flip()
-            #         for event in pygame.event.get():
-            #             if event.type == pygame.KEYDOWN and self.can_write:
-            #                 keyboard.hook(self.pressed_keys)
-            #                 if self.new_char == "enter" and self.can_write:
-            #                     self.screen.fill((85, 101, 102), write_rect)
-            #                     self.stack.append(self.input)
-            #                     self.input = ""
-            #                     pygame.display.flip()
-            #                     need_char = False
-            #                     break
-            #                 elif len(self.new_char) == 1 and self.can_write:
-            #                     self.input = self.new_char
-            #                 self.can_write = False
-            #             elif event.type == pygame.KEYUP:
-            #                 self.can_write = True
+            elif self.grid[self.position[0]][self.position[1]] == "&":
+                need_number = True
+                write_rect = pygame.Rect(5, 170, 150, 24)
+                while need_number:
+                    self.screen.fill((255, 255, 255), write_rect)
+                    pygame.draw.rect(self.screen, (0, 0, 0), write_rect, 1)
+                    if self.input == "":
+                        self.screen.blit(pygame.font.Font(None, 24).render("Введите число", True, (0, 0, 0)),
+                                         (7, 173))
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and self.can_write:
+                            keyboard.hook(self.pressed_keys)
+                            if self.new_char == "enter" and self.can_write:
+                                self.screen.fill((85, 101, 102), write_rect)
+                                self.stack.append(self.input)
+                                self.input = ""
+                                pygame.display.flip()
+                                need_number = False
+                                break
+                            elif len(self.new_char) == 1 and self.can_write and self.new_char.isdigit() and \
+                                    len(self.input) < 12:
+                                self.input += self.new_char
+                            self.can_write = False
+                        elif event.type == pygame.KEYUP:
+                            self.can_write = True
+            elif self.grid[self.position[0]][self.position[1]] == "~":
+                need_char = True
+                write_rect = pygame.Rect(5, 170, 150, 24)
+                while need_char:
+                    self.screen.fill((255, 255, 255), write_rect)
+                    pygame.draw.rect(self.screen, (0, 0, 0), write_rect, 1)
+                    if self.input == "":
+                        self.screen.blit(pygame.font.Font(None, 24).render("Введите символ", True, (0, 0, 0)),
+                                         (7, 173))
+                    else:
+                        self.screen.blit(pygame.font.Font(None, 24).render(self.input, True, (0, 0, 0)),
+                                         (7, 173))
+                    pygame.display.flip()
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and self.can_write:
+                            keyboard.hook(self.pressed_keys)
+                            if self.new_char == "enter" and self.can_write:
+                                self.screen.fill((85, 101, 102), write_rect)
+                                self.stack.append(self.input)
+                                self.input = ""
+                                pygame.display.flip()
+                                need_char = False
+                                break
+                            elif len(self.new_char) == 1 and self.can_write:
+                                self.input = self.new_char
+                            self.can_write = False
+                        elif event.type == pygame.KEYUP:
+                            self.can_write = True
             elif self.grid[self.position[0]][self.position[1]] == ".":
                 if self.stack[-1].isdigit():
                     self.result += str(self.pop())
