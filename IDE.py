@@ -6,17 +6,34 @@ from GUI import Draw
 
 
 class BefungeIDE:
-    def __init__(self):
+    def __init__(self, save):
+        self.button_rect_blue = pygame.Rect(5, 20, 50, 24)
+        self.button_rect_gray = pygame.Rect(65, 20, 50, 24)
+        self.button_rect_purple = pygame.Rect(125, 20, 50, 24)
+        self.button_rect_green = pygame.Rect(185, 20, 50, 24)
+        self.screen = pygame.display.set_mode((1210, 700))
+        if save.data["theme"] == [1]:
+            self.screen.fill((85, 101, 102))
+            self.square_fill = (203, 203, 203)
+        elif save.data["theme"] == [2]:
+            self.screen.fill((137, 9, 137))
+            self.square_fill = (178, 102, 255)
+        elif save.data["theme"] == [3]:
+            self.screen.fill((0, 51, 0))
+            self.square_fill = (102, 255, 102)
+        else:
+            self.screen.fill((152, 255, 255))
+            self.square_fill = (51, 153, 203)
+        self.save = save
         self.grid = [[None for _ in range(25)] for _ in range(80)]
         self.add_in_stack = False
-        self.screen = pygame.display.set_mode((1210, 700))
         self.grid_size = 15
         self.position = [0, 0]
         self.new_char = ""
         self.can_write = True
         self.can_move = True
         self.timer = datetime.datetime.today()
-        self.screen.fill((85, 101, 102))
+        self.answer = ""
 
     def draw_lines(self):
         for x in range(81):
@@ -29,7 +46,7 @@ class BefungeIDE:
     def code_loop(self):
         button_rect_start = pygame.Rect(1066, 20, 40, 24)
         button_rect_stop = pygame.Rect(1116, 20, 40, 24)
-        gui_tools = Draw(self)
+        gui_tools = Draw(self, self.square_fill)
         ready = False
         while not ready:
             current_time = datetime.datetime.today()
@@ -50,6 +67,38 @@ class BefungeIDE:
                     if button_rect_start.collidepoint(event.pos):
                         ready = True
                         break
+                    elif self.button_rect_gray.collidepoint(event.pos):
+                        self.save.data["theme"] = [1]
+                        self.save.write(self.save.data, 'users.json')
+                        self.screen.fill((85, 101, 102))
+                        gui_tools.fill = (203, 203, 203)
+                        if self.answer != "":
+                            self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+                            self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
+                    elif self.button_rect_purple.collidepoint(event.pos):
+                        self.save.data["theme"] = [2]
+                        self.save.write(self.save.data, 'users.json')
+                        self.screen.fill((137, 9, 137))
+                        gui_tools.fill = (178, 102, 255)
+                        if self.answer != "":
+                            self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+                            self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
+                    elif self.button_rect_green.collidepoint(event.pos):
+                        self.save.data["theme"] = [3]
+                        self.save.write(self.save.data, 'users.json')
+                        self.screen.fill((0, 51, 0))
+                        gui_tools.fill = (102, 255, 102)
+                        if self.answer != "":
+                            self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+                            self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
+                    elif self.button_rect_blue.collidepoint(event.pos):
+                        self.save.data["theme"] = [4]
+                        self.save.write(self.save.data, 'users.json')
+                        self.screen.fill((152, 255, 255))
+                        gui_tools.fill = (51, 153, 203)
+                        if self.answer != "":
+                            self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+                            self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
             gui_tools.drawing(button_rect_start, button_rect_stop, delta_time)
             pygame.display.flip()
 
@@ -62,5 +111,6 @@ class BefungeIDE:
     def pressed_keys(self, e):
         if len(e.name) == 1 or e.name == "down" or e.name == "up" or e.name == "right" or e.name == "left":
             self.new_char = e.name
-        elif e.name == "space":
-            self.new_char = " "
+        elif e.name == "backspace":
+            self.new_char = ""
+            self.grid[self.position[0]][self.position[1]] = None

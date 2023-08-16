@@ -54,12 +54,15 @@ class GameLogic:
         else:
             self.screen.fill((255, 10, 30), pygame.Rect(1117, 21, 38, 22))
         self.screen.blit(pygame.font.Font(None, 24).render("Stop", True, (0, 0, 0)), (1118, 24))
-        if self.grid[self.position[0]][self.position[1]] is not None:
-            if self.grid[self.position[0]][self.position[1]] == "\"":
-                self.add_now = not self.add_now
-            elif self.add_now:
+        if self.grid[self.position[0]][self.position[1]] == "\"":
+            self.add_now = not self.add_now
+        elif self.add_now:
+            if self.grid[self.position[0]][self.position[1]] is None:
+                self.stack.append(" ")
+            else:
                 self.stack.append(self.grid[self.position[0]][self.position[1]])
-            elif self.grid[self.position[0]][self.position[1]] == ">":
+        elif self.grid[self.position[0]][self.position[1]] is not None:
+            if self.grid[self.position[0]][self.position[1]] == ">":
                 self.vector = [1, 0]
             elif self.grid[self.position[0]][self.position[1]] == "<":
                 self.vector = [-1, 0]
