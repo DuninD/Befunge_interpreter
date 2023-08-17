@@ -15,6 +15,6 @@ class Befunge:
         bi = BefungeIDE(save)
         while True:
             bi.code_loop()
-            logic = GameLogic(bi.grid, bi.screen)
+            logic = GameLogic(bi.grid, bi.screen, bi.square_fill)
             logic.translate()
             bi.answer = logic.result

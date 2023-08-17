@@ -72,6 +72,7 @@ class BefungeIDE:
                         self.save.write(self.save.data, 'users.json')
                         self.screen.fill((85, 101, 102))
                         gui_tools.fill = (203, 203, 203)
+                        self.square_fill = (203, 203, 203)
                         if self.answer != "":
                             self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
                             self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
@@ -80,6 +81,7 @@ class BefungeIDE:
                         self.save.write(self.save.data, 'users.json')
                         self.screen.fill((137, 9, 137))
                         gui_tools.fill = (178, 102, 255)
+                        self.square_fill = (178, 102, 255)
                         if self.answer != "":
                             self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
                             self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
@@ -88,6 +90,7 @@ class BefungeIDE:
                         self.save.write(self.save.data, 'users.json')
                         self.screen.fill((0, 51, 0))
                         gui_tools.fill = (102, 255, 102)
+                        self.square_fill = (102, 255, 102)
                         if self.answer != "":
                             self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
                             self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
@@ -96,6 +99,7 @@ class BefungeIDE:
                         self.save.write(self.save.data, 'users.json')
                         self.screen.fill((152, 255, 255))
                         gui_tools.fill = (51, 153, 203)
+                        self.square_fill = (51, 153, 203)
                         if self.answer != "":
                             self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
                             self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
