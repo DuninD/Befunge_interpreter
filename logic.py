@@ -5,7 +5,7 @@ import sys
 
 
 class GameLogic:
-    def __init__(self, grid, screen, fill):
+    def __init__(self, grid, screen, fill, screen_fill):
         self.stack = []
         self.signs = [">", "<", "^", "v", "_", "|", "?", "#", "@", ":", "\\", "$", "p", "g", "0", "1", "2", "3", "4",
                       "5", "6", "7", "8", "9", "\"", "+", "-", "*", "/", "%", "!", "`", ".", ","]
@@ -273,6 +273,7 @@ class GameLogic:
         self.screen.fill(self.fill, [[5 + self.position[0] * 15 + 1, 200 + self.position[1] * 15 + 1], [14, 14]])
         self.draw_text(self.screen, self.grid[self.position[0]][self.position[1]], (5 + self.position[0] * 15 + 3,
                                                                                     200 + self.position[1] * 15 + 1))
+
     def draw_text(self, surface, text, pos, color=(0, 0, 0)):
         font_size = 24
         font = pygame.font.Font(None, font_size)

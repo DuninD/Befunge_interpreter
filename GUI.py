@@ -10,6 +10,8 @@ class Draw:
         self.button_rect_gray = pygame.Rect(65, 20, 50, 24)
         self.button_rect_purple = pygame.Rect(125, 20, 50, 24)
         self.button_rect_green = pygame.Rect(185, 20, 50, 24)
+        self.button_rect_save = pygame.Rect(490, 20, 90, 24)
+        self.button_rect_library = pygame.Rect(585, 20, 90, 24)
 
     def drawing(self, button_rect_start, button_rect_stop, delta_time):
         self.IDE.screen.fill((255, 255, 255), [[5, 200], [1200, 375]])
@@ -20,10 +22,16 @@ class Draw:
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_green, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_purple, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_gray, 1)
+        pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_library, 1)
+        pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_save, 1)
         if not button_rect_start.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(1067, 21, 38, 22))
         else:
             self.IDE.screen.fill((0, 210, 111), pygame.Rect(1067, 21, 38, 22))
+        if not self.button_rect_save.collidepoint(pygame.mouse.get_pos()):
+            self.IDE.screen.fill((203, 203, 203), pygame.Rect(491, 21, 88, 22))
+        else:
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(491, 21, 88, 22))
         if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
         else:
@@ -31,19 +39,23 @@ class Draw:
         if not self.button_rect_gray.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(66, 21, 48, 22))
         else:
-            self.IDE.screen.fill((85, 101, 102), pygame.Rect(66, 21, 48, 22))
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(66, 21, 48, 22))
+        if not self.button_rect_library.collidepoint(pygame.mouse.get_pos()):
+            self.IDE.screen.fill((203, 203, 203), pygame.Rect(586, 21, 88, 22))
+        else:
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(586, 21, 88, 22))
         if not self.button_rect_purple.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(126, 21, 48, 22))
         else:
-            self.IDE.screen.fill((137, 9, 137), pygame.Rect(126, 21, 48, 22))
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(126, 21, 48, 22))
         if not self.button_rect_green.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(186, 21, 48, 22))
         else:
-            self.IDE.screen.fill((0, 51, 0), pygame.Rect(186, 21, 48, 22))
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(186, 21, 48, 22))
         if not self.button_rect_blue.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(6, 21, 48, 22))
         else:
-            self.IDE.screen.fill((152, 255, 255), pygame.Rect(6, 21, 48, 22))
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(6, 21, 48, 22))
         if delta_time < 500000:
             self.IDE.screen.fill(self.fill, [[5 + self.IDE.position[0] * self.IDE.grid_size + 1,
                                                     200 + self.IDE.position[1] * self.IDE.grid_size + 1], [14, 14]])
@@ -74,3 +86,5 @@ class Draw:
         self.IDE.draw_text(self.IDE.screen, "Gray", (70, 24))
         self.IDE.draw_text(self.IDE.screen, "Violet", (128, 24))
         self.IDE.draw_text(self.IDE.screen, "Green", (187, 24))
+        self.IDE.draw_text(self.IDE.screen, "Сохранить", (492, 24))
+        self.IDE.draw_text(self.IDE.screen, "Загрузить", (590, 24))

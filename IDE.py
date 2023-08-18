@@ -12,6 +12,10 @@ class BefungeIDE:
         self.button_rect_purple = pygame.Rect(125, 20, 50, 24)
         self.button_rect_green = pygame.Rect(185, 20, 50, 24)
         self.screen = pygame.display.set_mode((1210, 700))
+        self.write_code = True
+        self.read_code = False
+        self.add_new = False
+        self.is_library = False
         if save.data["theme"] == [1]:
             self.screen.fill((85, 101, 102))
             self.square_fill = (203, 203, 203)
@@ -46,6 +50,8 @@ class BefungeIDE:
     def code_loop(self):
         button_rect_start = pygame.Rect(1066, 20, 40, 24)
         button_rect_stop = pygame.Rect(1116, 20, 40, 24)
+        button_rect_save = pygame.Rect(490, 20, 90, 24)
+        button_rect_library = pygame.Rect(585, 20, 90, 24)
         gui_tools = Draw(self, self.square_fill)
         ready = False
         while not ready:
@@ -66,6 +72,18 @@ class BefungeIDE:
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if button_rect_start.collidepoint(event.pos):
                         ready = True
+                        self.write_code = False
+                        self.read_code = True
+                        break
+                    elif button_rect_save.collidepoint(event.pos):
+                        ready = True
+                        self.write_code = False
+                        self.add_new = True
+                        break
+                    elif button_rect_library.collidepoint(event.pos):
+                        ready = True
+                        self.write_code = False
+                        self.is_library = True
                         break
                     elif self.button_rect_gray.collidepoint(event.pos):
                         self.save.data["theme"] = [1]
