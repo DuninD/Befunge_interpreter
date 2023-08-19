@@ -17,6 +17,7 @@ class Befunge:
         bi = BefungeIDE(save)
         while True:
             if bi.write_code:
+                bi.new_char = ""
                 bi.code_loop()
             elif bi.read_code:
                 logic = GameLogic(bi.grid, bi.screen, bi.square_fill, bi.square_fill)

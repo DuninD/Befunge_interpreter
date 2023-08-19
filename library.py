@@ -50,6 +50,7 @@ class PullCode:
                         for i in range(0, len(self.save.data) - 1):
                             option_rect = pygame.Rect(5 + (i % 7) * 175, 50 + (i // 7) * 29, 150, 24)
                             if option_rect.collidepoint(event.pos):
+                                self.save.data = self.save.read('users.json')
                                 self.grid = list(self.save.data.values())[i + 1]
                                 self.screen.fill(self.fill, [[0, 45], [2000, 100]])
                                 ready = True
