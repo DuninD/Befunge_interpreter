@@ -13,12 +13,13 @@ class Draw:
         self.button_rect_save = pygame.Rect(490, 20, 90, 24)
         self.button_rect_library = pygame.Rect(585, 20, 90, 24)
 
-    def drawing(self, button_rect_start, button_rect_stop, delta_time):
+    def drawing(self, button_rect_start, button_rect_stop, button_rect_delay, is_delay, delta_time):
         self.IDE.screen.fill((255, 255, 255), [[5, 200], [1200, 375]])
         self.IDE.draw_lines()
         pygame.draw.rect(self.IDE.screen, (21, 210, 45), button_rect_start, 1)
         pygame.draw.rect(self.IDE.screen, (255, 0, 0), button_rect_stop, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_blue, 1)
+        pygame.draw.rect(self.IDE.screen, (0, 0, 0), button_rect_delay, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_green, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_purple, 1)
         pygame.draw.rect(self.IDE.screen, (0, 0, 0), self.button_rect_gray, 1)
@@ -32,6 +33,10 @@ class Draw:
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(491, 21, 88, 22))
         else:
             self.IDE.screen.fill((162, 162, 162), pygame.Rect(491, 21, 88, 22))
+        if not button_rect_delay.collidepoint(pygame.mouse.get_pos()):
+            self.IDE.screen.fill((203, 203, 203), pygame.Rect(991, 21, 64, 22))
+        else:
+            self.IDE.screen.fill((162, 162, 162), pygame.Rect(991, 21, 64, 22))
         if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
             self.IDE.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
         else:
@@ -59,6 +64,10 @@ class Draw:
         if delta_time < 500000:
             self.IDE.screen.fill(self.fill, [[5 + self.IDE.position[0] * self.IDE.grid_size + 1,
                                                     200 + self.IDE.position[1] * self.IDE.grid_size + 1], [14, 14]])
+        if is_delay:
+            pygame.draw.circle(self.IDE.screen, (0, 210, 111), [1046, 32], 6)
+        else:
+            pygame.draw.circle(self.IDE.screen, (255, 10, 30), [1046, 32], 6)
         if len(self.IDE.new_char) == 1:
             self.IDE.grid[self.IDE.position[0]][self.IDE.position[1]] = self.IDE.new_char
         elif self.IDE.can_move:
@@ -88,3 +97,4 @@ class Draw:
         self.IDE.draw_text(self.IDE.screen, "Green", (187, 24))
         self.IDE.draw_text(self.IDE.screen, "Сохранить", (492, 24))
         self.IDE.draw_text(self.IDE.screen, "Загрузить", (590, 24))
+        self.IDE.draw_text(self.IDE.screen, "Delay", (992, 24))

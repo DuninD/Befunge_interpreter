@@ -21,7 +21,7 @@ class Befunge:
                 bi.code_loop()
             elif bi.read_code:
                 logic = GameLogic(bi.grid, bi.screen, bi.square_fill, save)
-                logic.translate()
+                logic.translate(bi.is_delay)
                 bi.answer = logic.result
                 bi.read_code = False
                 bi.write_code = True

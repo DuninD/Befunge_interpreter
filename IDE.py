@@ -38,6 +38,7 @@ class BefungeIDE:
         self.can_move = True
         self.timer = datetime.datetime.today()
         self.answer = ""
+        self.is_delay = False
 
     def draw_lines(self):
         for x in range(81):
@@ -49,6 +50,7 @@ class BefungeIDE:
 
     def code_loop(self):
         button_rect_start = pygame.Rect(1066, 20, 40, 24)
+        button_rect_delay = pygame.Rect(990, 20, 66, 24)
         button_rect_stop = pygame.Rect(1116, 20, 40, 24)
         button_rect_save = pygame.Rect(490, 20, 90, 24)
         button_rect_library = pygame.Rect(585, 20, 90, 24)
@@ -85,6 +87,8 @@ class BefungeIDE:
                         self.write_code = False
                         self.is_library = True
                         break
+                    elif button_rect_delay.collidepoint(event.pos):
+                        self.is_delay = not self.is_delay
                     elif self.button_rect_gray.collidepoint(event.pos):
                         self.save.data["theme"] = [1]
                         self.save.write(self.save.data, 'users.json')
@@ -121,7 +125,7 @@ class BefungeIDE:
                         if self.answer != "":
                             self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
                             self.screen.blit(pygame.font.Font(None, 24).render(self.answer, True, (0, 0, 0)), (7, 590))
-            gui_tools.drawing(button_rect_start, button_rect_stop, delta_time)
+            gui_tools.drawing(button_rect_start, button_rect_stop, button_rect_delay, self.is_delay, delta_time)
             pygame.display.flip()
 
     def draw_text(self, surface, text, pos, color=(0, 0, 0)):

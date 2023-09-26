@@ -8,6 +8,7 @@ class SaveLogic:
         self.screen = screen
         self.new_char = ""
         self.name = ""
+        save.data = save.read('users.json')
         self.save = save
         self.can_write = True
         self.can_add = True

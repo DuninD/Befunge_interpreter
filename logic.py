@@ -37,21 +37,34 @@ class GameLogic:
         else:
             self.fill_screen = (152, 255, 255)
 
-    def translate(self):
+    def translate(self, is_delay):
         button_rect_stop = pygame.Rect(1116, 20, 40, 24)
         while not self.ready:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                elif event.type == pygame.KEYDOWN and self.can_write:
+                    keyboard.hook(self.pressed_keys)
+                    self.can_write = False
+                elif event.type == pygame.KEYUP:
+                    self.can_write = True
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if button_rect_stop.collidepoint(event.pos):
                         self.ready = True
                         break
             if not self.ready:
-                self.next_move(button_rect_stop)
-                self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
-            self.screen.blit(pygame.font.Font(None, 24).render(self.result, True, (0, 0, 0)), (7, 590))
+                if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
+                    self.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
+                else:
+                    self.screen.fill((255, 10, 30), pygame.Rect(1117, 21, 38, 22))
+                self.screen.blit(pygame.font.Font(None, 24).render("Stop", True, (0, 0, 0)), (1118, 24))
+                if (is_delay and self.new_char == "space" and self.can_write) or not is_delay:
+                    self.can_write = False
+                    self.new_char = ""
+                    self.next_move()
+                    self.screen.fill((255, 255, 255), [[5, 587], [1200, 100]])
+                    self.screen.blit(pygame.font.Font(None, 24).render(self.result, True, (0, 0, 0)), (7, 590))
             pygame.display.flip()
 
     def pop(self):
@@ -65,12 +78,7 @@ class GameLogic:
     def pressed_keys(self, e):
         self.new_char = e.name
 
-    def next_move(self, button_rect_stop):
-        if not button_rect_stop.collidepoint(pygame.mouse.get_pos()):
-            self.screen.fill((203, 203, 203), pygame.Rect(1117, 21, 38, 22))
-        else:
-            self.screen.fill((255, 10, 30), pygame.Rect(1117, 21, 38, 22))
-        self.screen.blit(pygame.font.Font(None, 24).render("Stop", True, (0, 0, 0)), (1118, 24))
+    def next_move(self):
         if self.grid[self.position[0]][self.position[1]] == "\"":
             self.add_now = not self.add_now
         elif self.add_now:
@@ -156,9 +164,7 @@ class GameLogic:
 
     def copy(self):
         if len(self.stack) == 0:
-            self.result = f"Ошибка в поле по индексу {self.position[0], self.position[1]}." \
-                          f" В стеке нет элементов."
-            self.ready = True
+            self.stack = ["0", "0"]
         else:
             self.stack.append(self.stack[-1])
 
@@ -195,7 +201,11 @@ class GameLogic:
             self.ready = True
         else:
             last = self.pop()
-            self.stack.append(str(ord(self.grid[self.pop()][last])))
+            pre_last = self.pop()
+            if self.grid[pre_last][last] is None:
+                self.stack.append("32")
+            else:
+                self.stack.append(str(ord(self.grid[pre_last][last])))
 
     def add_number_in_stack(self):
         self.stack.append(self.grid[self.position[0]][self.position[1]])
